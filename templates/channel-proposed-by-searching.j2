@@ -1,0 +1,12 @@
+<ul class="videos_list_video_viewer">
+{% for i in range(channels_loaded|length)%}
+    <li class="channel-proposition">
+        <a href="/channel/{{channels_loaded[i][0]}}">
+            <img src="../static/profile_pictures/{{channels_loaded[i][4]}}" width="100" height="100" class="img-circle">
+            <div class="video-proposition-infos">
+                <h5>{{channels_loaded[i][1]}}</h5>
+            </div>
+        </a>
+    </li>
+{%endfor%}
+</ul>

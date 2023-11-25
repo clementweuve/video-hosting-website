@@ -1,0 +1,52 @@
+{% extends "base.j2" %}
+
+{%block title%}Settings - Anata{%endblock%}
+
+{%block body%}
+<form action="{{ url_for('post_account_update') }}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+<div id="channel-body">
+    <div id="banner-div">
+        <img src="../static/banners/{{user_account[6]}}" id="ac-banner">
+    </div>
+    <label>
+    Banner picture - recommended ratio : 4:1 (example : 1920*300)
+    </label>
+    <input type="file" name="banner_picture" id="banner_picture" accept=".png, .jpg, .jpeg">
+    <div id="Channel_Head">
+        <div id="Channel_Head_Left">
+            <div id="ac-PP">
+                <label for="ac-input-profile_picture">
+                    <figure class="hover-img">
+                        <img src="../static/profile_pictures/{{user_account[4]}}" width="100px" height="100px" id="channel_pp" class="img-circle">
+                    </figure>
+                </label>
+                <input type="file" name="profile_picture" id="ac-input-profile_picture" accept=".png, .jpg, .jpeg">
+            </div>
+            <div id="Channel_Head_Title">
+                <input type="text" placeholder="{{user_account[1]}}" name="name" id="name" autofocus="" minlength="4" maxlength="18">
+            </div>
+        </div>
+    <div class="follow_div">
+        <button type="submit" name="ac-submit_button" id="ac-submit_button" class="ActionButton"><h5>Submit</h5></button>
+    </div>
+    </div>
+    <hr class="hr_channel">
+    <div id="about_page" class="active">
+        <div id="about_page_content">
+            <div id="about_desc">
+                <h4>Description:</h4>
+                <hr>
+                <textarea placeholder="{{user_account[9]}}" id="about_text" name="about_text"></textarea>
+            </div>
+            <div id="about_stats">
+                <h4>Stats:</h4>
+                <hr>
+                <p>Actif depuis le {{user_account[5]}}</p>
+                <hr>
+            </div>
+        </div>
+    </div>
+    
+</div>
+</form>
+{%endblock%}

@@ -1,0 +1,274 @@
+{% extends "base.j2" %}
+
+{%block title%}{{video_infos[2]}} - Anata{%endblock%}
+
+{%block popup%}
+    <h3 class="TitlePage">Report</h3>
+    <div class="center">
+        <form class="Form_UUID" action="{{ url_for('post_report_video') }}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+            <div class="field">
+                <div class="control">
+                    <label>Video reported<em class="red">*</em></label><br>
+                    <select id="video-report" name="video-report">
+                        <option value={{video_infos[0]}}>{{video_infos[2]}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <label>Reason<em class="red">*</em></label><br>
+                    <select id="reason-report" name="reason-report">
+                        <option value="Promoting violence">Promoting violence</option>
+                        <option value="Pornography">Pornography</option>
+                        <option value="Spam / Scams">Spam / Scams</option>
+                        <option value="Identity fraud">Identity fraud</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <label>More Informations ?</label><br>
+                    <input class="input-fullsize" type="text" name="more-infos-report" id="more-infos-report" placeholder="More Informations ?" minlength="6">
+                </div>
+            </div>
+            <div class="center">
+                <button type='submit' class="ActionButton btn-form-margin">Submit</button>
+            </div>
+        </form>
+    </div>
+{%endblock%}
+
+{%block body%}
+<div class="videoviewer-body">
+    <div id="videoviewer-video">
+        <video controls controlsList="nodownload" autoplay id="videoviewer_videoplayer" onloadstart="this.volume=0.5">
+            <source src="/static/videos/{{video_infos[1]}}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <h3>{{video_infos[2]}}</h3>
+        <div class="videoview_channel">
+            <div class="align">
+                <a href="/channel/{{account_video[0]}}" class="align">
+                    <img src="../static/profile_pictures/{{account_video[4]}}" width="50" height="50" class="img-circle">
+                    <div>
+                        <h5>{{account_video[1]}}</h5>
+                        <h6>{{follow_number}} followers</h6>
+                    </div>
+                </a>
+                {%if is_following==False %}
+                    <form action="{{ url_for('follow_post') }}" method="post" enctype="multipart/form-data">
+                        <button value="{{account_video[0]}}" name="follow_button" class="small-action-btn">Follow</button>
+                    </form>
+                {%else%}
+                    {%if account_video[0]!=user_account[0]%}
+                        <form action="{{ url_for('unfollow_post') }}" method="post" enctype="multipart/form-data">
+                            <button value="{{account_video[0]}}" name="unfollow_button" class="small-action-btn">Unfollow</button>
+                        </form>
+                    {%endif%}
+                {%endif%}
+            </div>
+            <div id="videoviewer-actions" class="align">
+                {%if is_following!=False and account_video[0]==user_account[0]%}
+                    <div class="follow_div">
+                        <button type="submit" name="account_settings_button" id="account_settings_button" href="#" class="small-action-btn"><img src="../static/menus_pictures/settings_FILL0_wght400_GRAD0_opsz48.svg" width="24" height="24">Settings</button>
+                    </div>
+                {%endif%}
+                <form action="{{ url_for('like_post') }}" method="post" enctype="multipart/form-data" id="like-form" name="like-form">
+                    {%if is_liking == False%}
+                    <button class="opinionbutton" id="like-btn" name="like-btn"><img src="../static/menus_pictures/thumb_up_FILL0_wght400_GRAD0_opsz48.svg"><p id="like_value">{{video_infos[6]}}</p></button>
+                    {%else%}
+                    <button class="opinionbutton active" id="like-btn" name="like-btn"><img src="../static/menus_pictures/thumb_up_FILL0_wght400_GRAD0_opsz48.svg" id="like_img"><p id="like_value">{{video_infos[6]}}</p></button>
+                    {%endif%}
+                </form>
+                <form action="{{ url_for('dislike_post') }}" method="post" enctype="multipart/form-data" id="dislike-form" name="dislike-form">
+                    {%if is_disliking == False%}
+                    <button class="opinionbutton" id="dislike-btn" name="dislike-btn" value="Dislike"><img src="../static/menus_pictures/thumb_down_FILL0_wght400_GRAD0_opsz48.svg" id="dislike_img"></button>
+                    {%else%}
+                    <button class="opinionbutton active" id="dislike-btn" name="dislike-btn" value="Dislike"><img src="../static/menus_pictures/thumb_down_FILL0_wght400_GRAD0_opsz48.svg"></button>
+                    {%endif%}
+                </form>
+            <a>
+                <button class="small-action-btn" onclick="copyLink()"><img src="../static/menus_pictures/share_FILL0_wght600_GRAD0_opsz48.svg" width="24" height="24">Share</button>
+            </a>
+            <button onclick="OpenPopup()" class="round_btn"><img src="../static/menus_pictures/flag_FILL0_wght400_GRAD0_opsz48.svg"></button>
+            </div>
+        </div>
+        <div class="videoview_moreinfos menu-background">
+            <p class="videoview_stats">{{video_infos[5]}} views • {{video_infos[8]}}</p>
+            <p>{{video_infos[3]}}</p>
+        </div>
+        <div id="vw-comment-section">
+            <h4>{{comments|length}} comments</h4>
+            {% if account_connecter==true %}
+                <div id="new-comment-section">
+                    <form action="{{ url_for('comment_post') }}" method="post" enctype="multipart/form-data" id="vw-comment-form" name="vw-comment-form">
+                        <img src="../static/profile_pictures/{{user_account[4]}}" width="40px" height="40px" class="img-circle" id="vw-comment-pp">
+                        <input type="text" placeholder="write a comment" id="vw-comment-input" name="content" required>
+                        <button type="submit" name="account_settings_button" id="vw-comment-post-btn" href="#" class="small-action-btn">Post</button>
+                    </form>
+                </div>
+        {%endif%}
+            <div id="vw-comments-list">
+                {%include "comments_list.j2"%}
+            </div>
+        </div>
+    </div>
+    <div class="videoviewer-other-videos">
+        <ul class="videos_list_video_viewer" id="scroller">
+            <template id="video_template">
+                <li class="video-proposition">
+                    <a href="/" id="link_video">
+                        <img src="../" class="miniature-video-proposed" id="miniature">
+                        <div class="video-proposition-infos">
+                            <h5 class="text-limit-2" id="videotitle"></h5>
+                            <div class="align">
+                                <img src="/" class="channel_pp_prop img-circle" id="pp_user">
+                                <p id="pseudo_user" class="text-limit-1"></p>
+                            </div>
+                            <p class="videos-infos-text-proposition" id="videos_infos"></p>
+                        </div>
+                    </a>
+                </li>
+            </template>
+        </ul>
+        <div id="sentinel"></div>
+    </div>
+</div>
+
+{%endblock%}
+
+{%block script%}
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+          crossorigin="anonymous">
+    </script>
+ 
+    <script type="text/javascript">
+    $( document ).ready(function() {
+        const like_btn = document.querySelector('#like-btn');
+        const dislike_btn = document.querySelector('#dislike-btn');
+        var like_count = document.getElementById("like_value");
+        const like_img = document.getElementById("like_img");
+        const dislike_img = document.getElementById("dislike_img");
+        $(document).on('submit','#like-form',function(e)
+                     {
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            url:'/post-like',
+            success: function(msg) {
+                if (msg === 'True'){
+                    if (like_btn.classList.contains('active')){
+                        like_btn.classList.remove('active');
+                        like_count.innerHTML = parseInt(like_count.innerHTML) - 1;
+                    }
+                    else{
+                        like_btn.classList.add('active');
+                        like_count.innerHTML = parseInt(like_count.innerHTML) + 1;
+                        if (dislike_btn.classList.contains('active')){
+                            dislike_btn.classList.remove('active');
+                        }
+                    }
+                }
+            }
+        })
+        })
+        $(document).on('submit','#dislike-form',function(e)
+                    {
+            e.preventDefault();
+            $.ajax({
+                type:'POST',
+                url:'/post-dislike',
+                success: function(msg) {
+                    if (msg === 'True'){
+                        if (dislike_btn.classList.contains('active')){
+                            dislike_btn.classList.remove('active')
+                        }
+                        else{
+                            dislike_btn.classList.add('active')
+                            if (like_btn.classList.contains('active')){
+                                like_btn.classList.remove('active')
+                                like_count.innerHTML = parseInt(like_count.innerHTML) - 1;
+                            }
+                        }
+                    }
+                }
+            })
+        })
+    });
+    </script>
+    <script type="text/javascript">
+    $(document).on('submit','#vw-comment-form',function(e)
+                   {
+      e.preventDefault();
+      $.ajax({
+        type:'POST',
+        url:'/post-comment',
+        data: $("#vw-comment-input").serialize(),
+        success: function (msg) {
+                  document.getElementById("vw-comments-list").innerHTML = msg;
+              }
+      })
+        
+        var frm = document.getElementsByName('vw-comment-form')[0];
+        frm.reset();  // Reset all form data
+    });
+    </script>
+    <script>
+    function copyLink() {
+        if (navigator.share) {
+            navigator.share({
+                title: document.title,
+                url: window.location.href
+            })
+        }
+        else{
+            /* Copy text into clipboard */
+            navigator.clipboard.writeText(window.location.href)
+            alert("URL copied !")
+        }
+    }
+    </script>
+    <script>
+    
+        var scroller = document.querySelector("#scroller");
+        var template = document.querySelector("#video_template");
+
+        var sentinel = document.querySelector("#sentinel");
+        var counter = 0;
+
+        function loadItems() {
+
+            fetch('/load').then((response) => {
+                response.json().then((data) => {
+                    
+                    if (!data.length){
+                        sentinel.innerHTML = "No more videos";
+                    }
+
+                    for (var i = 0; i < data.length; i++) {
+                        let template_clone = template.content.cloneNode(true);
+                        template_clone.querySelector("#videotitle").innerHTML = data[i][1];
+                        template_clone.querySelector("#link_video").href = '/video/'+data[i][0];
+                        template_clone.querySelector("#miniature").src = '../static/miniatures/'+data[i][3];
+                        template_clone.querySelector("#pp_user").src = '../static/profile_pictures/'+data[i][6];
+                        template_clone.querySelector("#pseudo_user").innerHTML = data[i][5];
+                        template_clone.querySelector("#videos_infos").innerHTML = data[i][2] + 'views •' + data[i][4];
+                        scroller.appendChild(template_clone);
+                        counter += 1;
+                    }
+                })
+            })
+        }
+
+        var intersectionObserver = new IntersectionObserver(entries => {
+            if (entries[0].intersectionRatio <= 0) {
+                return;
+            }
+            loadItems();
+        });
+        intersectionObserver.observe(sentinel);
+
+    </script>
+
+{%endblock%}

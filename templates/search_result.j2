@@ -1,0 +1,18 @@
+{% extends "base.j2" %}
+
+{%block title%}Search - Anata{%endblock%}
+{%block body%}
+<div class="search-div-result">
+    {%if channels_loaded|length > 0%}
+        {%include "channel-proposed-by-searching.j2"%}
+        <hr>
+    {%endif%}
+    {%if videos_loaded|length > 0%}
+        {%include "video-proposed.j2"%}
+        <p>No other videos were found</p>
+    {%else%}
+    <!--If no videos found, shows this text-->
+    <p>No videos found</p>
+    {%endif%}
+</div>
+{%endblock%}

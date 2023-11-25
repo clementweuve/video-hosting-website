@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>{%block title%}{%endblock%}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet"  href="{{ url_for('static', filename='admin-style.css') }}" />
+  <link rel="shortcut icon" href="{{ url_for('static', filename='icon.png') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+  {%block script%}
+  {%endblock%}
+</head>
+
+<body>
+  <header>
+      <h3 id="title-header"><a href="/">Anata</a> - Admin Panel</h3>
+      <form class="searchbar"  action="/post-search-admin" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+        <input type="text" placeholder="Search in Bans" class="search-input" id="search_value" name="search_value">
+        <button class="search-btn" type="submit"><img src="../static/menus_pictures/search_FILL0_wght400_GRAD0_opsz48.svg"></button>
+      </form>
+  </header>
+  <main>
+    {%block body%}
+    {%endblock%}
+  </main>
+  <footer>
+  </footer>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+{% extends "base.j2" %}
+
+{%block title%}Sign up - Anata{%endblock%}
+{%block body%}
+<div>
+    <h2 class="TitlePage">Sign Up</h2>
+    <div class="center">
+        <form class="Form" action="{{ url_for('post_signup') }}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+            <div class="field">
+                <div class="control">
+                    <label>Profile Picture<em class="red">*</em></label><br>
+                    <input type="file" name="profile_picture" id="profile_picture" accept=".png, .jpg, .jpeg">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <label>Your Email<em class="red">*</em></label><br>
+                    <input class="input-fullsize" type="email" name="email" placeholder="Email" autofocus="" minlength="4" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <label>Your Name<em class="red">*</em></label><br>
+                    <input class="input-fullsize" type="text" name="name" placeholder="Name" autofocus="" minlength="4" maxlength="18"required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <label>Your Password<em class="red">*</em></label><br>
+                    <input class="input-fullsize" type="password" name="password" placeholder="Password" minlength="6" required>
+                </div>
+            </div>
+            <div class="field">
+                <div class="checkbox_aligned">
+                    <input type="checkbox" name="cgu_checkbox" placeholder="cgu_checkbox" required>
+                    <p>I acknowledge having read and understood <a href="/cgu">the TOS</a> and I accept them.</p>
+                </div>
+            </div>
+            <div class="center">
+                <button class="ActionButton btn-form-margin">Sign Up</button>
+            </div>
+        </form>
+    </div>
+    <div class="center">
+        <a href="/login">Already have an account ? Log In!</a>
+    </div>
+</div>
+{%endblock%}

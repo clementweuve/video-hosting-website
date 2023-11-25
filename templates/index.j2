@@ -1,0 +1,77 @@
+{% extends "base.j2" %}
+
+{%block title%}Home - Anata{%endblock%}
+
+{%block body%}
+<div class="container">
+    <div class="column">
+        <div class="col">
+                <ul class="videos_list_fullpage" id="scroller">
+                    <template id="video_template">
+                        <li class="index_video">
+                        <a href="/" class="link_video" id="link_video">
+                            <img src="../" width="300" height="auto" class="miniature" id="miniature">
+                            <div class="index-video-infos">
+                                <p class="index_videotitle text-limit-2" id="index_videotitle"></p>
+                                <div class="align">
+                                    <img src="/" class="channel_pp_prop img-circle" id="pp_user">
+                                    <p id="pseudo_user" class="text-limit-1"></p>
+                                </div>
+                                <p class="videos_infos" id="videos_infos"></p>
+                            </div>
+                        </a>
+                        </li>
+                    </template>
+                </ul>
+
+            <div id="sentinel">
+            
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+{%block script%}
+    <script>
+    
+        var scroller = document.querySelector("#scroller");
+        var template = document.querySelector("#video_template");
+
+        var sentinel = document.querySelector("#sentinel");
+        var counter = 0;
+
+        function loadItems() {
+
+            fetch('/load').then((response) => {
+                response.json().then((data) => {
+                    
+                    if (!data.length){
+                        sentinel.innerHTML = "No more videos";
+                    }
+
+                    for (var i = 0; i < data.length; i++) {
+                        let template_clone = template.content.cloneNode(true);
+                        template_clone.querySelector("#index_videotitle").innerHTML = data[i][1];
+                        template_clone.querySelector("#link_video").href = '/video/'+data[i][0];
+                        template_clone.querySelector("#miniature").src = '../static/miniatures/'+data[i][3];
+                        template_clone.querySelector("#pp_user").src = '../static/profile_pictures/'+data[i][6];
+                        template_clone.querySelector("#pseudo_user").innerHTML = data[i][5];
+                        template_clone.querySelector("#videos_infos").innerHTML = data[i][2] + ' views • ' + data[i][4];
+                        scroller.appendChild(template_clone);
+                        counter += 1;
+                    }
+                })
+            })
+        }
+
+        var intersectionObserver = new IntersectionObserver(entries => {
+            if (entries[0].intersectionRatio <= 0) {
+                return;
+            }
+            loadItems();
+        });
+        intersectionObserver.observe(sentinel);
+
+    </script>
+{%endblock%}

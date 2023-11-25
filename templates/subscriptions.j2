@@ -1,0 +1,23 @@
+{% extends "base.j2" %}
+{%block title%}Subscriptions - Anata{%endblock%}
+{%block body%}
+<div id="subs_page">
+    {% if subscriptions|length > 0 %}
+        <div class="subscriptions_channels_list">
+            <ul>
+                {% for account in subscriptions%}
+                <li>
+                    <a href="/channel/{{account[0]}}" class="navbar-sub">
+                        <img src="../static/profile_pictures/{{account[4]}}" class="sub_account_picture">
+                    </a>
+                </li>
+                {%endfor%}
+            </ul>
+        </div>
+        <hr id="hr_subscriptions">
+        {%include 'videos_fullpage.j2'%}
+    {%else%}
+        <p>You don't have any subscriptions.</p>
+    {%endif%}
+</div>
+{%endblock%}

@@ -1,0 +1,167 @@
+{% extends "admin-base.j2" %}
+
+{%block script%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function ban_function(uuid){
+        $.ajax({
+            type:'POST',
+            url:'/post-ban',
+            data: {
+                report_uuid: (uuid),
+            },
+            success: function () {
+            }
+        });
+        document.getElementById(uuid).remove()
+    }
+    function nothing_function(uuid){
+        $.ajax({
+            type:'POST',
+            url:'/post-nothing',
+            data: {
+                report_uuid: (uuid),
+            },
+            success: function () {
+            }
+        });
+        document.getElementById(uuid).remove()
+    }
+    function ban_video_function(uuid){
+        $.ajax({
+            type:'POST',
+            url:'/post-ban-video',
+            data: {
+                report_uuid: (uuid),
+            },
+            success: function () {
+            }
+        });
+        document.getElementById(uuid).remove()
+    }
+    function nothing_video_function(uuid){
+        $.ajax({
+            type:'POST',
+            url:'/post-nothing-video',
+            data: {
+                report_uuid: (uuid),
+            },
+            success: function () {
+            }
+        });
+        document.getElementById(uuid).remove()
+    }
+</script>
+{%endblock%}
+
+{%block body%}
+<div id="admin-stats">
+    <h3 id="stats-title">Stats</h3>
+    <ul>
+        <li>
+            <h5>Nombre utilisateurs</h5>
+            <h4>{{n_users}}</h4>
+        </li>
+        <li>
+            <h5>Nombre videos</h5>
+            <h4>{{n_videos}}</h4>
+        </li>
+        <li>
+            <h5>Plaintes comptes</h5>
+            <h4>{{reports|length}}</h4>
+        </li>
+        <li>
+            <h5>Plaintes vidéos</h5>
+            <h4>{{videos_reports|length}}</h4>
+        </li>
+    </ul>
+</div>
+<div id="admin-tables">
+    <div id="table_accounts_report" class="table_report">
+        <table>
+            <thead>
+                <tr>
+                    <th>USER</th>
+                    <th>DATE</th>
+                    <th>REASON</th>
+                    <th>MORE INFOS</th>
+                    <th>DECISION</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%if reports|length > 0%}
+                    {%for report in reports%}
+                    <tr id="{{report[0]}}">
+                        <td><a href="/channel/{{report[2]}}" target="_blank">{{report[2]}}</a></td>
+                        <td>{{report[1]}}</td>
+                        <td>{{report[3]}}</td>
+                        <td>{{report[4]}}</td>
+                        <td>
+                            <button class="admin-ban-btn red" name="admin-ban-btn" onclick="ban_function('{{report[0]}}')">
+                                <img src="../static/menus_pictures/gavel_FILL0_wght400_GRAD0_opsz48.svg">
+                                <p>BAN</p>
+                            </button>
+                            <button class="green" name="admin-ban-btn" onclick="nothing_function('{{report[0]}}')">
+                                <img src="../static/menus_pictures/done_FILL0_wght400_GRAD0_opsz48.svg">
+                                <p>NOTHING</p>
+                            </button>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                {%else%}
+                    <tr>
+                        <td>No reports</td>
+                        <td>No reports</td>
+                        <td>No reports</td>
+                        <td>No reports</td>
+                        <td>No reports</td>
+                    </tr>
+                {%endif%}
+            </tbody>
+        </table>
+    </div>
+    <div id="table_videos_report" class="table_report">
+        <table>
+            <thead>
+                <tr>
+                    <th>VIDEO</th>
+                    <th>DATE</th>
+                    <th>REASON</th>
+                    <th>MORE INFOS</th>
+                    <th>DECISION</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%if videos_reports|length > 0%}
+                    {%for report in videos_reports%}
+                    <tr id="{{report[0]}}">
+                        <td><a href="/video/{{report[2]}}" target="_blank">{{report[2]}}</a></td>
+                        <td>{{report[1]}}</td>
+                        <td>{{report[3]}}</td>
+                        <td>{{report[4]}}</td>
+                        <td>
+                            <button class="admin-ban-btn red" name="admin-ban-btn" onclick="ban_video_function('{{report[0]}}')">
+                                <img src="../static/menus_pictures/gavel_FILL0_wght400_GRAD0_opsz48.svg">
+                                <p>BAN</p>
+                            </button>
+                            <button class="green" name="admin-ban-btn" onclick="nothing_video_function('{{report[0]}}')">
+                                <img src="../static/menus_pictures/done_FILL0_wght400_GRAD0_opsz48.svg">
+                                <p>NOTHING</p>
+                            </button>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                {%else%}
+                    <tr>
+                        <td>No reports</td>
+                        <td>No reports</td>
+                        <td>No reports</td>
+                        <td>No reports</td>
+                        <td>No reports</td>
+                    </tr>
+                {%endif%}
+            </tbody>
+        </table>
+    </div>
+</div>
+{%endblock%}

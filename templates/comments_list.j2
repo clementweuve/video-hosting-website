@@ -1,0 +1,16 @@
+{%for comment in comments%}
+    <div class="vw-comment">
+            <a href="/channel/{{comment[0]}}">
+                <img src="../static/profile_pictures/{{comment[2]}}" width="40px" height="40px" class="img-circle comment-account-pp">
+            </a>
+            <div>
+                <div class="align">
+                    <a href="/channel/{{comment[0]}}">
+                        <h5>{{comment[1]}}</h5>
+                    </a>
+                    <p class="vw-comment-infos">{{comment[4]}}</p>
+                </div>
+                <p class="vw-comment-content">{{comment[3]}}</p>
+            </div>
+    </div>
+{%endfor%}

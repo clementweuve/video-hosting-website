@@ -1,0 +1,21 @@
+<div class="container">
+    <ul class="videos_list_fullpage">
+        {%for i in range(videos|length)%}
+            {%if videos[i]!=None%}
+                <li class="index_video">
+                    <a href="/video/{{videos[i][0]}}">
+                        <img src="../static/miniatures/{{videos[i][7]}}" width="300" height="auto" class="miniature">
+                        <div>
+                            <p class="index_videotitle text-limit-2">{{videos[i][2]}}</p>
+                            <div class="align">
+                                <img src="../static/profile_pictures/{{videos_users[i][4]}}" class="channel_pp_prop img-circle">
+                                <p id="pseudo_user">{{videos_users[i][1]}}</p>
+                            </div>
+                            <p class="videos_infos">{{videos[i][5]}} views • {{videos[i][8]}}</p>
+                        </div>
+                    </a>
+                </li>
+            {%endif%}
+        {%endfor%}
+    </ul>
+</div>

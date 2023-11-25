@@ -1,0 +1,110 @@
+{% extends "admin-base.j2" %}
+
+{%block script%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function unban_function(uuid){
+        $.ajax({
+            type:'POST',
+            url:'/post-unban',
+            data: {
+                report_uuid: (uuid),
+            },
+            success: function () {
+            }
+        });
+        document.getElementById(uuid).remove()
+    }
+    function unban_video_function(uuid){
+        $.ajax({
+            type:'POST',
+            url:'/post-unban-video',
+            data: {
+                report_uuid: (uuid),
+            },
+            success: function () {
+            }
+        });
+        document.getElementById(uuid).remove()
+    }
+</script>
+{%endblock%}
+
+{%block body%}
+<div id="admin-tables">
+    <div id="table_accounts_report" class="table_report">
+        <table>
+            <thead>
+                <tr>
+                    <th>UUID</th>
+                    <th>MAIL</th>
+                    <th>NAME</th>
+                    <th>REASON</th>
+                    <th>DATE BAN</th>
+                    <th>DECISION</th>
+                    <th>ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%if banned_accounts|length > 0%}
+                    {%for account in banned_accounts%}
+                    <tr>
+                        <td>{{account[0]}}</td>
+                        <td>{{account[1]}}</td>
+                        <td>{{account[2]}}</td>
+                        <td>{{account[3]}}</td>
+                        <td>{{account[4]}}</td>
+                        <td>{{account[5]}}</td>
+                        <td>
+                            <button class="green">
+                                <img src="../static/menus_pictures/gavel_FILL0_wght400_GRAD0_opsz48.svg">
+                                <p>UNBAN</p>
+                            </button>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                {%else%}
+                    <tr>
+                        <td>No banned account found</td>
+                        <td>No banned account found</td>
+                        <td>No banned account found</td>
+                        <td>No banned account found</td>
+                        <td>No banned account found</td>
+                    </tr>
+                {%endif%}
+            </tbody>
+        </table>
+    </div>
+    <div id="table_videos_report" class="table_report">
+        <table>
+            <thead>
+                <tr>
+                    <th>UUID</th>
+                    <th>NAME</th>
+                    <th>DATE</th>
+                    <th>REASON</th>
+                    <th>DATE BAN</th>
+                    <th>MORE INFOS</th>
+                    <th>DECISION</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%if videos_reports|length > 0%}
+                    {%for report in videos_reports%}
+                    <tr>
+                    </tr>
+                    {%endfor%}
+                {%else%}
+                    <tr>
+                        <td>No banned video found</td>
+                        <td>No banned video found</td>
+                        <td>No banned video found</td>
+                        <td>No banned video found</td>
+                        <td>No banned video found</td>
+                    </tr>
+                {%endif%}
+            </tbody>
+        </table>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,19 @@
+<div class="Channel_videos_list_div container">
+{%if videos|length!=0%}
+    <ul class="videos_list_fullpage">
+        {%for i in range(videos|length)%}
+            <li class="index_video">
+                <a href="/video/{{videos[i][0]}}">
+                    <img src="../static/miniatures/{{videos[i][7]}}" width="300" height="auto">
+                    <div>
+                        <p class="index_videotitle text-limit-2">{{videos[i][2]}}</p>
+                        <p class="videos_infos text-limit-1">{{videos[i][5]}} views</p>
+                    </div>
+                </a>
+            </li>
+        {%endfor%}
+    </ul>
+{%else%}
+    <p>No videos</p>
+{%endif%}
+</div>

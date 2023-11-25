@@ -1,0 +1,147 @@
+{% extends "base.j2" %}
+
+{%block title%}{{account_channel[1]}} - Anata{%endblock%}
+
+{%block popup%}
+    <h3 class="TitlePage">Report</h3>
+    <div class="center">
+        <form class="Form_UUID" action="{{ url_for('post_report_account') }}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+            <div class="field">
+                <div class="control">
+                    <label>Account reported<em class="red">*</em></label><br>
+                    <select id="account-report" name="account-report">
+                        <option value="{{account_channel[0]}}">{{account_channel[1]}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <label>Reason<em class="red">*</em></label><br>
+                    <select id="reason-report" name="reason-report">
+                        <option value="Bad behavior">Bad behavior</option>
+                        <option value="Promoting violence">Promoting violence</option>
+                        <option value="Pornography">Pornography</option>
+                        <option value="Spam / Scams">Spam / Scams</option>
+                        <option value="Identity fraud">Identity fraud</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <label>More Informations ?</label><br>
+                    <input class="input-fullsize" type="text" name="more-infos-report" id="more-infos-report" placeholder="More Informations ?" minlength="6">
+                </div>
+            </div>
+            <div class="center">
+                <button type='submit' class="ActionButton btn-form-margin">Submit</button>
+            </div>
+        </form>
+    </div>
+{%endblock%}
+
+{%block body%}
+<div id="channel-body">
+    {%if account_channel[7] != 1%}
+    <div id="banner-div">
+        <img src="../static/banners/{{account_channel[6]}}" id="banner">
+    </div>
+    <div id="Channel_Head">
+        <div id="Channel_Head_Left">
+            <img src="../static/profile_pictures/{{account_channel[4]}}" id="channel_pp" class="img-circle">
+            <div id="Channel_Head_Title">
+                <h3>{{account_channel[1]}}</h3>
+                <h5>{{follow_number}} followers</h5>
+            </div>
+        </div>
+        <div class="follow_div">
+        {%if is_following==False%}
+            <form class="follow_form" action="/post-follow" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                <button type="submit" name="follow_button" id="follow_button" value="{{account_channel[0]}}" class="ActionButton"><h5>Follow</h5></button>
+            </form>
+        {%else%}
+            {%if user_account[0]!=account_channel[0]%}
+                <form class="unfollow_form" action="/post-unfollow" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                    <button type="submit" name="unfollow_button" id="unfollow_button" value="{{account_channel[0]}}" class="ActionButton"><h5>Unfollow</h5></button>
+                </form>
+            {%else%}
+                <a href="/account-settings">
+                    <button name="account_settings_button" id="account_settings_button" class="ActionButton"><h6>Settings</h6></button>
+                </a>
+            {%endif%}
+        {%endif%}
+        </div>
+    </div>
+    <div class="hr_channel">
+        <nav id="channel_nav">
+            <li>
+                <button id="videos_channel_btn" class="active">Videos</button>
+            </li>
+            <li>
+                <button class="">Playlists</button>
+            </li>
+            <li>
+                <button class="">Community</button>
+            </li>
+            <li>
+                <button id="about_channel_btn" class="">About</button>
+            </li>
+        </nav>
+        <hr>
+    </div>
+    <div id="videos_list_page" class="active">
+        {%if videos|length!=0%}
+            {%include "videos_fullpage_channel.j2"%}
+        {%else%}
+            {%if user_account[0]==account_channel[0]%}
+                <div align="center">
+                    <h3>You haven't posted any videos</h3>
+                    <a href='/upload'>
+                        <button class="ActionButton">Start</button>
+                    </a>
+                </div>
+            {%else%}
+                <p>No videos</p>
+            {%endif%}
+        {%endif%}
+        {%else%}
+        <p>Account Banned</p>
+        {%endif%}
+    </div>
+    <div id="about_page" class="">
+        <div id="about_page_content">
+            <div id="about_desc">
+                <h4>Description:</h4>
+                <hr>
+                <p>{{account_channel[9]}}</p>
+            </div>
+            <div id="about_stats">
+                <h4>Stats:</h4>
+                <hr>
+                <p>Active since {{account_channel[5]}}</p>
+                <hr>
+                <button onclick="OpenPopup()" class="round_btn" id="channel-report-btn" name="channel-report-btn"><img src="../static/menus_pictures/flag_FILL0_wght400_GRAD0_opsz48.svg"></button>
+                <button onclick="copyLink()" class="round_btn" id="channel-share-btn" name="channel-share-btn"><img src="../static/menus_pictures/share_FILL0_wght600_GRAD0_opsz48.svg"></button>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+{%block script%}
+<script src="../static/js_scripts/channel.js"></script>
+<script>
+    function copyLink() {
+        if (navigator.share) {
+            navigator.share({
+                title: document.title,
+                url: window.location.href
+            })
+        }
+        else{
+            /* Copy text into clipboard */
+            navigator.clipboard.writeText(window.location.href)
+            alert("URL copied !")
+        }
+    }
+</script>
+{%endblock%}

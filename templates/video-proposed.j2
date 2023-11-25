@@ -1,0 +1,14 @@
+<ul class="videos_list_video_viewer">
+{% for i in range(videos_loaded|length)%}
+    <li class="video-proposition">
+        <a href="/video/{{videos_loaded[i][0]}}">
+            <img src="../static/miniatures/{{videos_loaded[i][7]}}" class="miniature-video-proposed">
+            <div class="video-proposition-infos">
+                <h5 class="video_prop_title">{{videos_loaded[i][2]}}</h5>
+                <p class="videofullpage_channel videos-infos-text-proposition"><img src="../static/profile_pictures/{{videos_users[i][4]}}" class="channel_pp_prop img-circle">{{videos_users[i][1]}}</p>
+                <p class="videos-infos-text-proposition">{{videos_loaded[i][5]}} views • {{videos_loaded[i][8]}}</p>
+            </div>
+        </a>
+    </li>
+{%endfor%}
+</ul>
