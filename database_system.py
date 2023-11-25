@@ -134,7 +134,7 @@ def create_account(uuid: str, username: str, mail: str, password: str, file_pict
     '''
     cursor.execute(f"""
     INSERT INTO account VALUES
-    ('{uuid}', '{username}', '{mail}', '{password}', '{file_picture}', '{date.today().strftime("%Y-%m-%d")}', 'default-banner.jpg', 0, 0, 'Hello I am {username} !', 0)
+    ('{uuid}', '{username}', '{mail}', '{password}', '{file_picture}', '{date.today().strftime("%Y-%m-%d")}', 'default-banner.jpg', 0, 0, 'Hello I am {username} !')
     """)
     print("Success: Account created")
     connection.commit()
