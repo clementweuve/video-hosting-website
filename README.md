@@ -1,4 +1,4 @@
-# video-platform-website
+# video-hosting-website
 ## Presentation
 This project allows you to host a video host website yourself. Inspired by YouTube, it includes many features:
 + Account system
