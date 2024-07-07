@@ -69,7 +69,7 @@ h2{
 }
 
 h3{
-    font-size:1.8em;
+    font-size:1.5em;
     font-weight: 300;
 }
 
@@ -109,10 +109,15 @@ a{
     font-weight: bold;
     transition: 200ms;
     font-size:1.2em;
+    cursor: pointer;
 }
 
 .dark-mode a{
     color: white;
+}
+
+.dark-mode button{
+    color: rgb(0, 0, 0);
 }
 
 a:hover{
@@ -133,7 +138,7 @@ p a{
 
 .small-action-btn {
     width:auto;
-    height:2.5rem;
+    height:2rem;
     margin-left: 0.5vw;
     background-color: rgb(238, 238, 238);
     display: flex;
@@ -142,7 +147,7 @@ p a{
     border-radius: 15px;
     border-width: 2px;
     border-color: #6e6e6e;
-    font-size: 20px;
+    font-size: 15px;
     padding-left: 10px;
     padding-right: 10px;
     cursor: pointer;
@@ -172,7 +177,6 @@ p a{
     width: 5vh;
     height: 5vh;
     border-radius: 100%;
-    background-color: white;
     cursor: pointer;
 }
 
@@ -534,6 +538,17 @@ header div{
     overflow: hidden;
 }
 
+#toggle-theme-btn{
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.2em;
+    text-align: left;
+    cursor: pointer;
+
+}
+
 @media screen
   and (max-device-width: 1200px)
   and (orientation: portrait){
@@ -616,8 +631,7 @@ footer a *{
 
 .index_video{
     min-height: 20vh;
-    height: 35vh;
-    max-height: 40vh;
+    max-height: 42vh;
     display: block;
 }
 
@@ -639,11 +653,12 @@ footer a *{
 
 .index_videotitle{
     max-width: 18vw;
+    font-size: 0.8em;
 }
 
 .channel_pp_prop{
-    height: 3vh;
-    width: 3vh;
+    height: 4vh;
+    width: 4vh;
 }
 
 #pseudo_user{
@@ -664,8 +679,6 @@ footer a *{
     }
     .index_video{
         min-height: 25vh;
-        height: 28vh;
-        max-height: 28vh;
     }
     .index_video img{
         max-width: 30vw;
@@ -678,8 +691,6 @@ footer a *{
 @media screen and (max-width: 900px) and (orientation: portrait){
     .index_video{
         min-height: 3vh;
-        height: 28vh;
-        max-height: 35vh;
     }
 }
 
@@ -695,8 +706,6 @@ footer a *{
     }
     .index_video{
         min-height: 3vh;
-        height: 30vh;
-        max-height: 35vh;
     }
     .index_videotitle{
         max-width: 40vw;
@@ -719,17 +728,17 @@ footer a *{
 .videoviewer-body{
     display: flex;
     flex-wrap: wrap;
-    margin-left: 2%;
+    margin-left: 6%;
+    margin-right: 6%;
 }
 
 #videoviewer-video{
-    min-width: 70vw;
-    max-width: 70vw;
+    width: 70%;
     margin-right: 2vw;
 }
 
 #videoviewer_videoplayer{
-    max-width: 70vw;
+    max-width: 100%;
     max-height: 80vh;
     position: relative;
     left: 50%;
@@ -740,11 +749,12 @@ footer a *{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    margin-top: 1%;
 }
 
 .opinionbutton {
     width:4rem;
-    height:2.5rem;
+    height:2rem;
     background-color: rgb(238, 238, 238);
     display: flex;
     align-items: center;
@@ -755,6 +765,10 @@ footer a *{
 #like-btn{
     border-radius: 15px 0px 0px 15px;
     border-width: 2px 0px 2px 2px;
+    margin-left: 0.5vw;
+}
+
+#signal-roundbtn-videoviewer{
     margin-left: 0.5vw;
 }
 
@@ -872,7 +886,7 @@ footer a *{
 }
 
 .videoviewer-other-videos{
-    width: 22.5vw;
+    width: 27.5%;
 }
 
 @media screen
@@ -882,8 +896,8 @@ footer a *{
         display: block;
     }
     #videoviewer-video{
-        min-width: 96vw;
-        max-width: 96vw;
+        width : 96%;
+        max-height: 90%;
     }
     .videoviewer-other-videos{
         width:  100%;
@@ -912,7 +926,7 @@ footer a *{
 }
 
 @media screen
-  and (max-width: 1400px){
+  and (max-width: 1300px){
     .videoviewer-body{
         display: block;
     }
@@ -1264,6 +1278,8 @@ footer a *{
 {
     cursor: pointer;
 }
+
+
 
 #about_text{
     width: 100%;

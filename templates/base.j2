@@ -109,5 +109,20 @@
     <script src="../static/js_scripts/darkmode.js"></script>
   {%block script%}
   {%endblock%}
+  <script>
+    function copyLink() {
+        if (navigator.share) {
+            navigator.share({
+                title: document.title,
+                url: window.location.href
+            })
+        }
+        else{
+            /* Copy text into clipboard */
+            navigator.clipboard.writeText(window.location.href)
+            alert("URL copied !")
+        }
+    }
+</script>
   </body>
 </html>

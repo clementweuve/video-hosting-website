@@ -90,7 +90,7 @@
             <a>
                 <button class="small-action-btn" onclick="copyLink()"><img src="../static/menus_pictures/share_FILL0_wght600_GRAD0_opsz48.svg" width="24" height="24">Share</button>
             </a>
-            <button onclick="OpenPopup()" class="round_btn"><img src="../static/menus_pictures/flag_FILL0_wght400_GRAD0_opsz48.svg"></button>
+            <button onclick="OpenPopup()" class="round_btn" id="signal-roundbtn-videoviewer"><img src="../static/menus_pictures/flag_FILL0_wght400_GRAD0_opsz48.svg"></button>
             </div>
         </div>
         <div class="videoview_moreinfos menu-background">
@@ -213,21 +213,6 @@
         var frm = document.getElementsByName('vw-comment-form')[0];
         frm.reset();  // Reset all form data
     });
-    </script>
-    <script>
-    function copyLink() {
-        if (navigator.share) {
-            navigator.share({
-                title: document.title,
-                url: window.location.href
-            })
-        }
-        else{
-            /* Copy text into clipboard */
-            navigator.clipboard.writeText(window.location.href)
-            alert("URL copied !")
-        }
-    }
     </script>
     <script>
     
